@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Listing
+from django.core.paginator import Paginator
 
 # Create your views here.
 def listings(request):
     listings = Listing.objects.all()
-    context = {"listings": listings}
+    paginator = Paginator(listings, 3)
+    page = request.GET.get('page')
+    page_listings = paginator.get_page(page)
+    context = {"listings": page_listings}
     return render(request, "listings/listings.html", context)
 
 def listing(request, listing_id):

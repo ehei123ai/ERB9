@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 
+from django.contrib.messages import constants as messages
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -49,6 +50,7 @@ APPLICATION_APPS = [
     'pages.apps.PagesConfig',
     'doctors.apps.DoctorsConfig',
     'listings.apps.ListingsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -152,3 +154,8 @@ INTERNAL_IPS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',
+}

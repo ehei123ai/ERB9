@@ -1,6 +1,7 @@
 {% extends "base.html"%}
 {% load static %}
 {% load humanize %}
+{% block title %} {{listing.title | title}} {% endblock %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -186,6 +187,22 @@
                   </li>
                 </ul>
               </div>
+            </div>
+
+            {% comment %} service tag {% endcomment %}
+            <div class="row mb-5">
+              <h5 class="text-secondary">Services : </h5>
+              {% if listing.services.all %}
+              <ul>
+                {% for service_tag in listing.services.all %}
+                <li class="mr-3">
+                  <h5>{{service_tag.name | title}}</h5>
+                </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <h5> No Services </h5>
+              {% endif %}
             </div>
 
             <!-- Description -->

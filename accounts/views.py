@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
 from django.shortcuts import render, redirect
+from contacts.models import Contact
 
 def register(request):
     if request.method == "POST":
@@ -30,7 +31,7 @@ def register(request):
                     )
                     user.save()
                     messages.success(request, "User created")
-            return redirect("accounts:register")
+            return redirect("accounts:login")
         else:
             messages.error(request, 'Passwords do not match')
             return redirect("accounts:register")
@@ -57,4 +58,8 @@ def logout(request):
         return redirect( 'pages:index' )
 
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    context = {
+        "contacts": user_contacts
+    }
+    return render(request, 'accounts/dashboard.html', context)
